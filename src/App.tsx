@@ -6,6 +6,7 @@ import './App.css';
 function App() {
   const [showChat, setShowChat] = useState(false);
   const [isChatMinimized, setIsChatMinimized] = useState(false);
+  const [isChatExpanded, setIsChatExpanded] = useState(false);
 
   const handleStartChat = () => {
     setShowChat(true);
@@ -15,10 +16,18 @@ function App() {
   const handleCloseChat = () => {
     setShowChat(false);
     setIsChatMinimized(false);
+    setIsChatExpanded(false);
   };
 
   const handleToggleMinimize = () => {
     setIsChatMinimized(!isChatMinimized);
+  };
+
+  const handleToggleExpand = () => {
+    setIsChatExpanded(!isChatExpanded);
+    if (isChatMinimized) {
+      setIsChatMinimized(false); // Un-minimize when expanding
+    }
   };
 
   return (
@@ -30,6 +39,8 @@ function App() {
           onClose={handleCloseChat}
           isMinimized={isChatMinimized}
           onToggleMinimize={handleToggleMinimize}
+          isExpanded={isChatExpanded}
+          onToggleExpand={handleToggleExpand}
         />
       )}
     </div>

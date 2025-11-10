@@ -11,6 +11,26 @@
   flex-direction: column;
   z-index: 1000;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  transition: all 0.3s ease;
+}
+
+/* Expanded state for larger view */
+.chat-interface.expanded {
+  width: 95vw;
+  height: 95vh;
+  max-width: none;
+  max-height: none;
+  
+  /* Center the expanded window */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  
+  /* Enhanced styling for expanded mode */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 2px solid #ddd;
 }
 
 /* Quick Response Buttons */
@@ -464,4 +484,68 @@
   border: none;
   border-top: 2px solid #e5e7eb;
   margin: 20px 0;
+}
+
+/* Responsive design for expanded mode */
+@media (max-width: 768px) {
+  .chat-interface.expanded {
+    width: calc(100vw - 20px);
+    height: calc(100vh - 40px);
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    border-radius: 10px;
+  }
+}
+
+/* Enhanced styling for expanded mode */
+.chat-interface.expanded .chat-messages {
+  padding: 20px;
+}
+
+.chat-interface.expanded .message-content {
+  max-width: none;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.chat-interface.expanded .message.bot .message-text {
+  padding: 20px;
+}
+
+.chat-interface.expanded .message.bot .message-text h3 {
+  font-size: 1.3em;
+  margin-bottom: 16px;
+}
+
+.chat-interface.expanded .message.bot .message-text h4 {
+  font-size: 1.1em;
+  margin-bottom: 12px;
+}
+
+.chat-interface.expanded .message.bot .message-text p {
+  margin-bottom: 14px;
+}
+
+.chat-interface.expanded .message.bot .message-text ul,
+.chat-interface.expanded .message.bot .message-text ol {
+  margin-bottom: 16px;
+  padding-left: 24px;
+}
+
+.chat-interface.expanded .message.bot .message-text li {
+  margin-bottom: 8px;
+}
+
+.chat-interface.expanded .message.bot .message-text blockquote {
+  padding: 16px 20px;
+  margin: 20px 0;
+}
+
+/* Ensure very large screens still have some margin */
+@media (min-width: 1920px) {
+  .chat-interface.expanded {
+    width: 90vw;
+    height: 90vh;
+  }
 }

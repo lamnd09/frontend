@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
-import { Send, X, MinusCircle } from 'lucide-react';
+import { Send, X, MinusCircle, Maximize2, Minimize2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import './ChatInterface.css';
 
@@ -27,9 +27,11 @@ interface ChatInterfaceProps {
   onClose: () => void;
   isMinimized: boolean;
   onToggleMinimize: () => void;
+  isExpanded?: boolean;
+  onToggleExpand?: () => void;
 }
 
-const ChatInterface: React.FC<ChatInterfaceProps> = ({ onClose, isMinimized, onToggleMinimize }) => {
+const ChatInterface: React.FC<ChatInterfaceProps> = ({ onClose, isMinimized, onToggleMinimize, isExpanded = false, onToggleExpand }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isConnected, setIsConnected] = useState(false);
@@ -181,7 +183,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onClose, isMinimized, onT
   }
 
   return (
-    <div className="chat-interface">
+    <div className={`chat-interface ${isExpanded ? 'expanded' : ''}`}>
       <div className="chat-header">
         <div className="chat-header-info">
           <div className="chat-avatar">🏦</div>
@@ -193,10 +195,15 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onClose, isMinimized, onT
           </div>
         </div>
         <div className="chat-controls">
-          <button className="control-button" onClick={onToggleMinimize}>
+          {onToggleExpand && (
+            <button className="control-button" onClick={onToggleExpand} title={isExpanded ? "Minimize" : "Expand"}>
+              {isExpanded ? <Minimize2 size={20} /> : <Maximize2 size={20} />}
+            </button>
+          )}
+          <button className="control-button" onClick={onToggleMinimize} title="Minimize">
             <MinusCircle size={20} />
           </button>
-          <button className="control-button" onClick={onClose}>
+          <button className="control-button" onClick={onClose} title="Close">
             <X size={20} />
           </button>
         </div>
