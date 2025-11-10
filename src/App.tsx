@@ -1,24 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import LandingPage from './components/LandingPage';
+import ChatInterface from './components/ChatInterface';
 import './App.css';
 
 function App() {
+  const [showChat, setShowChat] = useState(false);
+  const [isChatMinimized, setIsChatMinimized] = useState(false);
+
+  const handleStartChat = () => {
+    setShowChat(true);
+    setIsChatMinimized(false);
+  };
+
+  const handleCloseChat = () => {
+    setShowChat(false);
+    setIsChatMinimized(false);
+  };
+
+  const handleToggleMinimize = () => {
+    setIsChatMinimized(!isChatMinimized);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <LandingPage onStartChat={handleStartChat} />
+      
+      {showChat && (
+        <ChatInterface
+          onClose={handleCloseChat}
+          isMinimized={isChatMinimized}
+          onToggleMinimize={handleToggleMinimize}
+        />
+      )}
     </div>
   );
 }
